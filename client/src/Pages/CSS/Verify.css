@@ -1,0 +1,45 @@
+.verify {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.verify .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #FFD700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .verify {
+        height: 80vh;
+    }
+
+    .verify .spinner {
+        width: 40px;
+        height: 40px;
+        border-width: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .verify {
+        height: 60vh;
+    }
+
+    .verify .spinner {
+        width: 30px;
+        height: 30px;
+        border-width: 3px;
+    }
+}

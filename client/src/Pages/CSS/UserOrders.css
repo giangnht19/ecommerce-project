@@ -1,0 +1,84 @@
+.user-orders-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .orders-list {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .order-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .order-item p {
+    margin: 5px 0;
+  }
+  
+  .order-items {
+    margin-top: 10px;
+  }
+  
+  .order-item-detail {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #FFD700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background-color: green; /* Change this color based on status */
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }  
+  
+@media (max-width: 600px) {
+    .user-orders-page {
+        padding: 10px;
+    }
+
+    .orders-list {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .order-item {
+        padding: 15px;
+    }
+
+    .order-item-detail {
+        padding: 8px;
+    }
+}
