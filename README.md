@@ -16,7 +16,7 @@ Follow these steps to set up and run the project:
     ```
 2. Navigate to the project directory:
     ```bash
-    cd ecommerce-project
+    cd client
     ```
 3. Install dependencies:
     ```bash
