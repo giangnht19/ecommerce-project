@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 const AddProduct = () => {
 
-  const server = 'http://localhost:4000';
+  const server = 'https://ecommerce-server-cj0f.onrender.com';
   
   const [image, setImage] = useState(false);
 
