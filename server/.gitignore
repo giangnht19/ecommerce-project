@@ -1,5 +1,8 @@
 # .gitignore
 
+# env
+.end
+
 # Node modules
 node_modules/
 
