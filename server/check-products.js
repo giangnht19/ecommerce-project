@@ -28,8 +28,6 @@ const checkProducts = async () => {
       image: { $regex: /localhost/i }
     });
     
-    console.log(`Products with localhost URLs: ${localhostProducts.length}`);
-    
     process.exit(0);
   } catch (error) {
     console.error('Error checking products:', error);
