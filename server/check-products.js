@@ -28,6 +28,15 @@ const checkProducts = async () => {
       image: { $regex: /localhost/i }
     });
     
+    console.log(`\nProducts with localhost URLs: ${localhostProducts.length}`);
+    if (localhostProducts.length > 0) {
+      console.log('Localhost products:');
+      localhostProducts.forEach((product, index) => {
+        console.log(`${index + 1}. ID: ${product.id}, Name: ${product.name.substring(0, 30)}...`);
+        console.log(`   Image URL: ${product.image}`);
+      });
+    }
+    
     process.exit(0);
   } catch (error) {
     console.error('Error checking products:', error);

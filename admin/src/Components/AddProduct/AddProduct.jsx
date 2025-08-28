@@ -31,37 +31,66 @@ const AddProduct = () => {
   const Add_Product = async () => {
     console.log(productDetails);
 
-    let responseData;
-    let product = productDetails;
-    let formData = new FormData();
+    // Validate inputs
+    if (!productDetails.name || !productDetails.new_price || !image) {
+      alert('Please fill all fields and select an image');
+      return;
+    }
 
-    formData.append('product', image);
+    try {
+      let responseData;
+      let product = productDetails;
+      let formData = new FormData();
 
-    await fetch (`${server}/upload`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-      },
-      body: formData
-    }).then((resp) => resp.json()).then((data) => {
-        responseData = data;
-      })
-    
-    if (responseData.success) {
-      product.image = responseData.image_url;
-      console.log(product);
+      formData.append('product', image);
 
-      await fetch (`${server}/addproduct`, {
+      // Upload image first
+      const uploadResponse = await fetch (`${server}/upload`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(product),
-      }).then((resp) => resp.json()).then((data) => {
-          // console.log(data);
-          data.success ? alert('Product Added') : alert('Failed to add product');
-      })
+        body: formData
+      });
+      
+      responseData = await uploadResponse.json();
+      
+      if (responseData.success) {
+        product.image = responseData.image_url;
+        console.log('Image uploaded successfully:', product.image);
+
+        // Add product to database
+        const addProductResponse = await fetch (`${server}/addproduct`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(product),
+        });
+        
+        const addProductData = await addProductResponse.json();
+        
+        if (addProductData.success) {
+          alert('Product Added Successfully');
+          // Reset form
+          setProductDetails({
+            name: '',
+            old_price: "",
+            new_price: "",
+            category: 'women',
+            image: '',
+          });
+          setImage(false);
+        } else {
+          alert('Failed to add product');
+        }
+      } else {
+        alert('Failed to upload image: ' + (responseData.message || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error adding product:', error);
+      alert('An error occurred while adding the product');
     }
   }
 

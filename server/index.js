@@ -31,6 +31,21 @@ app.get('/', (req, res) => {
     res.send('Express App is up and running');
 });
 
+// Environment check endpoint for debugging
+app.get('/env-check', (req, res) => {
+    const envVars = {
+        NODE_ENV: process.env.NODE_ENV,
+        PORT: process.env.PORT,
+        SERVER_URL: process.env.SERVER_URL,
+        CLIENT_URL: process.env.CLIENT_URL,
+        host: req.get('host'),
+        protocol: req.protocol
+    };
+    
+    console.log('Environment check requested:', envVars);
+    res.json(envVars);
+});
+
 // Image Storage Engine
 const storage = multer.diskStorage({
     destination: './upload/images',
@@ -39,21 +54,53 @@ const storage = multer.diskStorage({
     },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ 
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB limit
+    },
+    fileFilter: (req, file, cb) => {
+        // Check file type
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Not an image! Please upload an image.'), false);
+        }
+    }
+});
 
 // Creating Upload Endpoints
 app.use('/images', express.static('upload/images'));
 
 app.post('/upload', upload.single('product'), (req, res) => {
-    // Use environment variable or determine the correct base URL
-    const baseUrl = process.env.NODE_ENV === 'production' 
-        ? `https://${req.get('host')}` 
-        : `http://localhost:${port}`;
-    
-    res.json({
-        success: 1,
-        image_url: `${baseUrl}/images/${req.file.filename}`,
-    });
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: 0,
+                message: 'No file uploaded'
+            });
+        }
+
+        // Use environment variable or determine the correct base URL
+        const baseUrl = process.env.NODE_ENV === 'production' 
+            ? (process.env.SERVER_URL || `https://${req.get('host')}`)
+            : `http://localhost:${port}`;
+        
+        const imageUrl = `${baseUrl}/images/${req.file.filename}`;
+        
+        console.log(`Image uploaded: ${imageUrl}`);
+        
+        res.json({
+            success: 1,
+            image_url: imageUrl,
+        });
+    } catch (error) {
+        console.error('Upload error:', error);
+        res.status(500).json({
+            success: 0,
+            message: 'Upload failed'
+        });
+    }
 });
 
 // Use Routers
