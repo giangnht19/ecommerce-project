@@ -18,8 +18,6 @@ const updateImageUrls = async () => {
       image: { $regex: /localhost/i }
     });
     
-    console.log(`Found ${products.length} products with localhost URLs`);
-    
     for (const product of products) {
       const oldUrl = product.image;
       // Replace localhost URL with production server URL
