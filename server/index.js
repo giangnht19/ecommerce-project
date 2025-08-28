@@ -8,9 +8,6 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require('path');
 
-// Import cloudinary configuration
-const { cloudinary, upload } = require('./config/cloudinary');
-
 // Import models to ensure MongoDB collections are created
 require('./models/Product');
 require('./models/User');
@@ -49,7 +46,32 @@ app.get('/env-check', (req, res) => {
     res.json(envVars);
 });
 
-// Creating Upload Endpoints - Using Cloudinary for persistent storage
+// Image Storage Engine
+const storage = multer.diskStorage({
+    destination: './upload/images',
+    filename: (req, file, cb) => {
+        return cb(null, `${file.fieldname}_${Date.now()}_${path.extname(file.originalname)}`);
+    },
+});
+
+const upload = multer({ 
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB limit
+    },
+    fileFilter: (req, file, cb) => {
+        // Check file type
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Not an image! Please upload an image.'), false);
+        }
+    }
+});
+
+// Creating Upload Endpoints
+app.use('/images', express.static('upload/images'));
+
 app.post('/upload', upload.single('product'), (req, res) => {
     try {
         if (!req.file) {
@@ -59,10 +81,14 @@ app.post('/upload', upload.single('product'), (req, res) => {
             });
         }
 
-        // Cloudinary automatically provides the secure_url
-        const imageUrl = req.file.path;
+        // Use environment variable or determine the correct base URL
+        const baseUrl = process.env.NODE_ENV === 'production' 
+            ? (process.env.SERVER_URL || `https://${req.get('host')}`)
+            : `http://localhost:${port}`;
         
-        console.log(`Image uploaded to Cloudinary: ${imageUrl}`);
+        const imageUrl = `${baseUrl}/images/${req.file.filename}`;
+        
+        console.log(`Image uploaded: ${imageUrl}`);
         
         res.json({
             success: 1,
