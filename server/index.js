@@ -31,21 +31,6 @@ app.get('/', (req, res) => {
     res.send('Express App is up and running');
 });
 
-// Environment check endpoint for debugging
-app.get('/env-check', (req, res) => {
-    const envVars = {
-        NODE_ENV: process.env.NODE_ENV,
-        PORT: process.env.PORT,
-        SERVER_URL: process.env.SERVER_URL,
-        CLIENT_URL: process.env.CLIENT_URL,
-        host: req.get('host'),
-        protocol: req.protocol
-    };
-    
-    console.log('Environment check requested:', envVars);
-    res.json(envVars);
-});
-
 // Image Storage Engine
 const storage = multer.diskStorage({
     destination: './upload/images',
