@@ -39,11 +39,16 @@
 .news-letter input{
     width: 500px;
     margin-left: 35px;
-    border: none;
-    outline: none;
     color: #616161;
+    background-color: white;
     font-family: Poppins;
     font-size: 16px;
+}
+
+.news-letter form div input {
+    border: none;
+    outline: none;
+    margin-top: 15px;
 }
 
 .news-letter button{
