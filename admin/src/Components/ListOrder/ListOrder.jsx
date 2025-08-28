@@ -74,7 +74,7 @@ const ListOrder = () => {
     <div className="list-order-page">
       <h1>All Orders</h1>
       <div className="orders-list">
-        {orders.map((order) => (
+        {[...orders].reverse().map((order) => (
           <div key={order._id} className="order-item">
             <div className="order-item-container">
               {order.items.map((item, index) => (

@@ -46,7 +46,7 @@ const UserOrders = () => {
     <div className="user-orders-page">
       <h1>Your Orders</h1>
       <div className="orders-list">
-        {orders.map((order) => (
+        {[...orders].reverse().map((order) => (
           <div key={order._id} className="order-item">
             <p><strong>Date:</strong> {new Date(order.date).toLocaleDateString()}</p>
             <p><div className="status-dot"></div>{order.status}</p>
