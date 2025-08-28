@@ -11,7 +11,7 @@ const getDefaultCart = () => {
 };
 
 const ShopContextProvider = ({ children }) => {
-    const server = "http://localhost:4000";
+    const server = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
     const [all_product, setAllProduct] = useState([]);
     const [cartItems, setCartItems] = useState(getDefaultCart());
 

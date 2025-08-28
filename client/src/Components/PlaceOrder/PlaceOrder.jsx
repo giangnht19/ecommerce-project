@@ -53,7 +53,7 @@ const PlaceOrder = () => {
             "auth-token": localStorage.getItem("auth-token")
         }
 
-        const response = await fetch("http://localhost:4000/place-order", {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL || "http://localhost:4000"}/place-order`, {
             method: "POST",
             headers: headers,
             body: JSON.stringify(body)

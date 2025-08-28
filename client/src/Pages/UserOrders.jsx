@@ -10,7 +10,7 @@ const UserOrders = () => {
       const token = localStorage.getItem('auth-token');
       if (token) {
         try {
-          const response = await fetch('http://localhost:4000/getorders', {
+          const response = await fetch(`${process.env.REACT_APP_SERVER_URL || 'http://localhost:4000'}/getorders`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

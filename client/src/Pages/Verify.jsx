@@ -10,7 +10,7 @@ const Verify = () => {
   const navigate = useNavigate();
   const { clearCart } = useContext(ShopContext);
 
-  const server = "http://localhost:4000";
+  const server = process.env.REACT_APP_SERVER_URL || "http://localhost:4000";
 
   const verifyOrder = async () => {
     try {

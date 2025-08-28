@@ -4,7 +4,7 @@ import remove_icon from '../../assets/cross_icon.png'
 
 const ListProduct = () => {
 
-  const server = 'http://localhost:4000';
+  const server = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000';
 
   const [allproducts, setAllProducts] = useState([]);
 

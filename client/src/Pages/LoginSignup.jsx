@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 const LoginSignup = () => {
 
-  const server = 'http://localhost:4000';
+  const server = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000';
 
   const [state, setState] = useState("Login")
 

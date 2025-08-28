@@ -6,7 +6,7 @@ const ListOrder = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const response = await fetch('http://localhost:4000/allorders', {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL || 'http://localhost:4000'}/allorders`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const ListOrder = () => {
   }, []);
 
   const updateOrderStatus = async (orderId, status) => {
-    await fetch(`http://localhost:4000/orders/${orderId}`, {
+    await fetch(`${process.env.REACT_APP_SERVER_URL || 'http://localhost:4000'}/orders/${orderId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
