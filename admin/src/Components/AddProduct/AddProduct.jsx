@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 const AddProduct = () => {
 
-  const server = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000';
+  const server = import.meta.env.VITE_SERVER_URL || 'http://localhost:4000';
   
   const [image, setImage] = useState(false);
 

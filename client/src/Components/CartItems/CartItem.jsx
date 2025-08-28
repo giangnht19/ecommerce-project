@@ -3,6 +3,7 @@ import './CartItem.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 import { useNavigate } from 'react-router-dom';
+import { getImageUrl } from '../../utils/imageUtils';
 
 const CartItem = () => {
   const { all_product, cartItems, addToCart, removeFromCart, getTotalCartAmount } = useContext(ShopContext);
@@ -42,7 +43,7 @@ const CartItem = () => {
           return (
             <div key={item.id}>
               <div className="cart-item-format cart-item-format-main">
-                <img src={item.image} alt="" className='carticon-product-icon' />
+                <img src={getImageUrl(item.image)} alt="" className='carticon-product-icon' />
                 <p className='cart-item-name'>{item.name}</p>
                 <p>${item.new_price}</p>
                 <p className='cart-item-quantity'>{cartItems[item.id]}</p>

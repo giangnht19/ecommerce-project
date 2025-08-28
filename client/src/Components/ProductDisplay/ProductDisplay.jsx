@@ -3,6 +3,7 @@ import './ProductDisplay.css'
 import star_icon from '../Assets/star_icon.png'
 import star_dull_icon from '../Assets/star_dull_icon.png'
 import { ShopContext } from '../../Context/ShopContext'
+import { getImageUrl } from '../../utils/imageUtils'
 
 const ProductDisplay = (props) => {
     const {product} = props;
@@ -11,13 +12,13 @@ const ProductDisplay = (props) => {
     <div className='product-display'>
       <div className="product-display-left">
         <div className="product-display-img-list">
-            <img src={product.image} alt="" />
-            <img src={product.image} alt="" />
-            <img src={product.image} alt="" />
-            <img src={product.image} alt="" />
+            <img src={getImageUrl(product.image)} alt="" />
+            <img src={getImageUrl(product.image)} alt="" />
+            <img src={getImageUrl(product.image)} alt="" />
+            <img src={getImageUrl(product.image)} alt="" />
         </div>
         <div className="product-dislay-img">
-            <img className='product-display-main-img' src={product.image} alt="" />
+            <img className='product-display-main-img' src={getImageUrl(product.image)} alt="" />
         </div>
       </div>
       <div className="product-display-right">

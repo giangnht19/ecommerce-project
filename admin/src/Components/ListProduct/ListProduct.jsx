@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './ListProduct.css'
 import remove_icon from '../../assets/cross_icon.png'
+import { getImageUrl } from '../../utils/imageUtils'
 
 const ListProduct = () => {
 
-  const server = process.env.REACT_APP_SERVER_URL || 'http://localhost:4000';
+  const server = import.meta.env.VITE_SERVER_URL || 'http://localhost:4000';
 
   const [allproducts, setAllProducts] = useState([]);
 
@@ -45,7 +46,7 @@ const ListProduct = () => {
         <hr />
         {allproducts.map((item, index) => {
           return <><div key={index} className="listproduct-format-main listproduct-format">
-            <img src={item.image} alt="" className="listproduct-product-icon" />
+            <img src={getImageUrl(item.image)} alt="" className="listproduct-product-icon" />
             <p>{item.name}</p>
             <p>${item.old_price}</p>
             <p>${item.new_price}</p>

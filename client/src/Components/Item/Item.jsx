@@ -1,6 +1,7 @@
 import React from 'react'
 import './Item.css'
 import { Link } from 'react-router-dom'
+import { getImageUrl } from '../../utils/imageUtils'
 
 const Item = (props) => {
   const handleClick = () => {
@@ -13,7 +14,7 @@ const Item = (props) => {
   return (
     <div className='item'>
         <Link to={`/product/${props.id}`} onClick={handleClick}>
-          <img src={props.image} alt="" />
+          <img src={getImageUrl(props.image)} alt="" />
         </Link> 
         <p>{props.name}</p>
         <div className="item-prices">

@@ -45,9 +45,14 @@ const upload = multer({ storage: storage });
 app.use('/images', express.static('upload/images'));
 
 app.post('/upload', upload.single('product'), (req, res) => {
+    // Use environment variable or determine the correct base URL
+    const baseUrl = process.env.NODE_ENV === 'production' 
+        ? `https://${req.get('host')}` 
+        : `http://localhost:${port}`;
+    
     res.json({
         success: 1,
-        image_url: `http://localhost:${port}/images/${req.file.filename}`,
+        image_url: `${baseUrl}/images/${req.file.filename}`,
     });
 });
 
