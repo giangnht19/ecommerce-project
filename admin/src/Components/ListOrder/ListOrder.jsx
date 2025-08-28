@@ -99,6 +99,8 @@ const ListOrder = () => {
                 onChange={(e) => updateOrderStatus(order._id, e.target.value)}
               >
                 <option value="Pending">Pending</option>
+                <option value="Payment Received">Payment Received</option>
+                <option value="Order Confirmed">Order Confirmed</option>
                 <option value="Delivering">Delivering</option>
                 <option value="Delivered">Delivered</option>
               </select>
