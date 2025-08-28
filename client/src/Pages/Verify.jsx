@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './CSS/Verify.css';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { ShopContext } from '../Context/ShopContext';
 
 const Verify = () => {
   const [searchParams] = useSearchParams();
   const success = searchParams.get('success');
   const orderId = searchParams.get('orderId');
   const navigate = useNavigate();
+  const { clearCart } = useContext(ShopContext);
 
   const server = "http://localhost:4000";
 
@@ -25,6 +27,8 @@ const Verify = () => {
       const data = await response.json();
 
       if (data.success) {
+        // Clear the cart on successful payment
+        clearCart();
         // console.log("Payment Successful");
         alert("Payment Successful");
         navigate("/userorders");

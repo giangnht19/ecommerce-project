@@ -90,6 +90,25 @@ const ShopContextProvider = ({ children }) => {
         return Object.values(cartItems).reduce((sum, quantity) => sum + quantity, 0);
     };
 
+    const clearCart = () => {
+        const emptyCart = getDefaultCart();
+        setCartItems(emptyCart);
+        if (localStorage.getItem("auth-token")) {
+            fetch(`${server}/clearcart`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "auth-token": localStorage.getItem("auth-token"),
+                    "Content-Type": "application/json",
+                },
+                body: "",
+            })
+                .then((res) => res.json())
+                .then((data) => console.log("Cart cleared:", data))
+                .catch((error) => console.error("Error clearing cart:", error));
+        }
+    };
+
     const contextValue = {
         all_product,
         cartItems,
@@ -97,6 +116,7 @@ const ShopContextProvider = ({ children }) => {
         removeFromCart,
         getTotalCartAmount,
         getTotalCartItems,
+        clearCart,
     };
 
     return <ShopContext.Provider value={contextValue}>{children}</ShopContext.Provider>;

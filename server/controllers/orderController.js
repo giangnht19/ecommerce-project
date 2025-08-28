@@ -46,6 +46,12 @@ exports.verifyOrder = async (req, res) => {
   try {
     if (success === 'true') {
       await Order.findOneAndUpdate({ _id: orderId }, { payment: true });
+      
+      // Clear the user's cart after successful payment
+      let cart = {};
+      for (let i = 0; i < 300; i++) cart[i] = 0;
+      await User.findOneAndUpdate({ _id: req.user.id }, { cartData: cart });
+      
       res.json({ success: true, message: 'Payment Successful' });
     } else {
       await Order.findOneAndDelete(orderId);

@@ -53,3 +53,14 @@ exports.getCartData = async (req, res) => {
   let userData = await User.findOne({ _id: req.user.id });
   res.json(userData.cartData);
 };
+
+exports.clearCart = async (req, res) => {
+  try {
+    let cart = {};
+    for (let i = 0; i < 300; i++) cart[i] = 0;
+    await User.findOneAndUpdate({ _id: req.user.id }, { cartData: cart });
+    res.json({ success: true, message: 'Cart cleared successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
