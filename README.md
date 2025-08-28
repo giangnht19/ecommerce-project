@@ -1,4 +1,5 @@
-# ecommerce-project
+# Ecommerce Personal Project
+external link: https://fashfrenzy.vercel.app/
 
 ## Getting Started
 
